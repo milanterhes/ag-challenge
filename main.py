@@ -14,7 +14,7 @@ class HookHandler(BaseHTTPRequestHandler):
     def handle_event(self, msg):
         if msg["event"]["channel"] == "CDQPMC7PY":
 
-            text = msg["event"]["text"] #message sent by the user
+            text = json.loads(msg["event"]["text"]) #message sent by the user
             date = {"date": msg["event_time"]}
             text.update(date)
 
@@ -51,7 +51,7 @@ class HookHandler(BaseHTTPRequestHandler):
         self.handle_event(message)
 
 def run(server_class=HTTPServer, handler_class=HookHandler):
-    server_adress = ('', 8080)
+    server_adress = ('', 80)
     httpd = server_class(server_adress, handler_class)
     print("launching server...")
     httpd.serve_forever()
